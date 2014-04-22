@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       game: {
-        files: ['game/*.js'],
+        files: ['game/*'],
         options: {
           livereload: true
         }

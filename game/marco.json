@@ -1,0 +1,20 @@
+{"frames": {
+
+"marco.gif":
+{
+	"frame": {"x":2,"y":2,"w":508,"h":51},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":508,"h":51},
+	"sourceSize": {"w":508,"h":51}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "marco.png",
+	"format": "RGBA8888",
+	"size": {"w":512,"h":55},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6284d02cf39a5781fdf0ee366ec4135c:98e8d790cecb218bd609f6257289d12a:08193c9de9130316009ea0078e3127c5$"
+}
+}
