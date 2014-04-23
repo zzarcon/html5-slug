@@ -14,6 +14,7 @@
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.atlasXML('marco', 'assets/marco.png', 'assets/marco.xml');
+        game.load.spritesheet('mummy', 'assets/mummy.png', 37, 45, 18);
     }
 
     function create() {
@@ -58,10 +59,14 @@
         player.body.gravity.y = 700;
         player.body.collideWorldBounds = true;
 
+        //Animations
+        player.animations.add('walk', null, 10);
 
-        //Our two animations, walking left and right.
-        player.animations.add('left', [8, 9, 10, 0, 1, 2, 3], 10, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
+        //Mummy
+        var mummy = game.add.sprite(300, 200, 'mummy');
+        mummy.scale.x = -1;
+        mummy.animations.add('walk');
+        mummy.animations.play('walk', 20, true);
 
         //Cursors
         cursors = game.input.keyboard.createCursorKeys();
@@ -83,7 +88,7 @@
             player.body.velocity.x = -150;
             // player.scale.x *= -1
             player.flipped = true;
-            player.animations.play('left');
+            player.animations.play('walk');
         } else if (cursors.right.isDown) {
             //Set right direction
             if (player.scale.x != 1) {
@@ -92,7 +97,7 @@
             //Move to the right
             player.body.velocity.x = 150;
             player.flipped = false;
-            player.animations.play('right');
+            player.animations.play('walk');
         } else {
             //Stand still
             player.animations.stop();
