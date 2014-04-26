@@ -1,5 +1,5 @@
 (function() {
-    var platforms, player, cursors;
+    var platforms, player, cursors, mummy, ground;
     var config = {
         width: 800,
         height: 600
@@ -11,46 +11,47 @@
     });
 
     function preload() {
-        game.load.image('sky', 'assets/sky.png');
+        game.load.image('mission1', 'assets/mission-1.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.atlasXML('marco', 'assets/marco.png', 'assets/marco.xml');
         game.load.spritesheet('mummy', 'assets/mummy.png', 37, 45, 18);
     }
 
     function create() {
+
+        game.world.setBounds(0, 0, 4088, config.height);
         //We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
-        //A simple background for our game
-        game.add.sprite(0, 0, 'sky');
-
+        game.add.sprite(0, 200, 'mission1');
         //The platforms group contains the ground and the 2 ledges we can jump on
         platforms = game.add.group();
 
         //We will enable physics for any object that is created in this group
         platforms.enableBody = true;
-
+        // debugger
         // Here we create the ground.
-        var ground = platforms.create(0, game.world.height - 64, 'ground');
+        ground = platforms.create(0, game.world.height - 64, 'ground');
 
         //Scale it to fit the width of the game (the original sprite is 400x32 in size)
-        ground.scale.setTo(2, 2);
+        ground.scale.setTo(4, 2);
 
         //This stops it from falling away when you jump on it
         ground.body.immovable = true;
 
         //Now let's create two ledges
-        var ledge = platforms.create(400, 400, 'ground');
+        // var ledge = platforms.create(400, 400, 'ground');
 
-        ledge.body.immovable = true;
+        // ledge.body.immovable = true;
 
-        ledge = platforms.create(-150, 250, 'ground');
+        // ledge = platforms.create(-150, 250, 'ground');
 
-        ledge.body.immovable = true;
+        // ledge.body.immovable = true;
 
         // The player and its settings
-        player = game.add.sprite(32, game.world.height - 150, 'marco');
+        player = game.add.sprite(300, game.world.height - 150, 'marco');
 
+        game.camera.follow(player);
         //We need to enable physics on the player
         game.physics.arcade.enable(player);
 
@@ -63,16 +64,14 @@
         player.animations.add('walk', null, 10);
 
         //Mummy
-        var mummy = game.add.sprite(300, 200, 'mummy');
-        mummy.scale.x = -1;
-        mummy.animations.add('walk');
-        mummy.animations.play('walk', 20, true);
+        // createMummy();
 
         //Cursors
         cursors = game.input.keyboard.createCursorKeys();
     }
 
     function update() {
+        // ground.scale.setTo(2, 2);
         //Collide the player and the stars with the platforms
         game.physics.arcade.collide(player, platforms);
 
@@ -109,4 +108,14 @@
             player.body.velocity.y = -500;
         }
     }
-})();
+
+    function createMummy() {
+        mummy = game.add.sprite(300, 200, 'mummy');
+        mummy.scale.x = -1;
+        mummy.animations.add('walk');
+        mummy.animations.play('walk', 20, true);
+    }
+
+    this.game = game;
+
+}).call(App);
