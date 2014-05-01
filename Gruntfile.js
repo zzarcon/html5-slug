@@ -29,7 +29,7 @@ module.exports = function(grunt) {
       game: {
         options: {
           port: 9092,
-          base: ['dist']
+          base: ['.', 'dist']
         }
       }
     }
