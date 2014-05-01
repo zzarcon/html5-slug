@@ -15,6 +15,7 @@
         update: update
     });
     function preload() {
+        game.load.tilemap('map', 'assets/mission-1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('mission1', mission.src);
         game.load.image('ground', 'assets/platform2.png');
         game.load.atlasXML('marco', 'assets/marco.png', 'assets/marco.xml');
@@ -22,26 +23,27 @@
     }
 
     function create() {
-
+        map = game.add.tilemap('map');
+        debugger;
         game.world.setBounds(0, 0, mission.width, config.height);
         //We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         game.add.sprite(0, 200, 'mission1');
 
-        platforms = game.add.group();
-        platforms.enableBody = true;
+        // platforms = game.add.group();
+        // platforms.enableBody = true;
 
-        ground = platforms.create(0, game.world.height - 90, 'ground');
-        ground.scale.setTo(4, 2);
-        ground.body.immovable = true;
+        // ground = platforms.create(0, game.world.height - 90, 'ground');
+        // ground.scale.setTo(4, 2);
+        // ground.body.immovable = true;
 
-        var ledge = platforms.create(0, 480, 'ground');
-        ledge.body.immovable = true;
+        // var ledge = platforms.create(0, 480, 'ground');
+        // ledge.body.immovable = true;
         // ledge = platforms.create(-150, 250, 'ground');
         // ledge.body.immovable = true;
 
-        player = game.add.sprite(750, game.world.height - 170, 'marco');
+        player = game.add.sprite(250, game.world.height - 170, 'marco');
 
         game.camera.follow(player);
         //We need to enable physics on the player
@@ -54,7 +56,7 @@
 
         //Animations
 
-        player.animations.add('walk', [4,5,6], 10);
+        player.animations.add('walk', [0,1,2,3,4,5,6,7,8,9], 10);
 
         player.animations.add('lookingUp', [13,12,11,10], 10, false);
         //Mummy
@@ -75,7 +77,7 @@
     function update() {
         // ground.scale.setTo(2, 2);
         //Collide the player and the stars with the platforms
-        game.physics.arcade.collide(player, platforms);
+        // game.physics.arcade.collide(player, platforms);
 
         //Reset the players velocity (movement)
         player.body.velocity.x = 0;
