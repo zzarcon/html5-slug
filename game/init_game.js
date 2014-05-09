@@ -1,5 +1,6 @@
 (function() {
     var platforms, player, cursors, mummy, ground;
+    var bullets = [];
     var mission = {
         src: 'assets/mission-1.png',
         width: 4088,
@@ -15,33 +16,33 @@
         update: update
     });
     function preload() {
-        game.load.tilemap('map', 'assets/mission-1.json', null, Phaser.Tilemap.TILED_JSON);
+        // game.load.tilemap('map', 'assets/mission-1.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.image('mission1', mission.src);
         game.load.image('ground', 'assets/platform2.png');
+        game.load.image('bullet', 'assets/bullet.gif');
         game.load.atlasXML('marco', 'assets/marco.png', 'assets/marco.xml');
         game.load.spritesheet('mummy', 'assets/mummy.png', 37, 45, 18);
     }
 
     function create() {
-        map = game.add.tilemap('map');
-        debugger;
+        // map = game.add.tilemap('map');
         game.world.setBounds(0, 0, mission.width, config.height);
         //We're going to be using physics, so enable the Arcade Physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         game.add.sprite(0, 200, 'mission1');
 
-        // platforms = game.add.group();
-        // platforms.enableBody = true;
+        platforms = game.add.group();
+        platforms.enableBody = true;
 
-        // ground = platforms.create(0, game.world.height - 90, 'ground');
-        // ground.scale.setTo(4, 2);
-        // ground.body.immovable = true;
+        ground = platforms.create(0, game.world.height - 90, 'ground');
+        ground.scale.setTo(4, 2);
+        ground.body.immovable = true;
 
-        // var ledge = platforms.create(0, 480, 'ground');
-        // ledge.body.immovable = true;
-        // ledge = platforms.create(-150, 250, 'ground');
-        // ledge.body.immovable = true;
+        var ledge = platforms.create(0, 480, 'ground');
+        ledge.body.immovable = true;
+        ledge = platforms.create(-150, 250, 'ground');
+        ledge.body.immovable = true;
 
         player = game.add.sprite(250, game.world.height - 170, 'marco');
 
@@ -77,13 +78,38 @@
     function update() {
         // ground.scale.setTo(2, 2);
         //Collide the player and the stars with the platforms
-        // game.physics.arcade.collide(player, platforms);
+        game.physics.arcade.collide(player, platforms);
 
         //Reset the players velocity (movement)
         player.body.velocity.x = 0;
 
+        updateBullets();
+
         if (cursors.fire.isDown) {
-            console.log('fire');
+            var x, sprite, y, direction;
+
+            if (cursors.up.isDown) {
+                x = (player.width / 2) + player.position.x;
+                y = player.position.y;
+                direction = 'up';
+            } else {
+                x = player.width + player.position.x;
+                y = (player.height / 2) + player.position.y;
+                direction = player.scale.x === 1 ? 'right' : 'left';
+            }
+
+            sprite = game.add.sprite(x, y, 'bullet');
+
+            if (direction === 'left') {
+                sprite.scale.x = -1;
+            } else if (direction === 'up') {
+                sprite.rotation = 4.7;
+            }
+
+            bullets.push({
+                direction: direction,
+                sprite: sprite
+            });
         }
 
         //Cursor keys
@@ -118,6 +144,20 @@
         if (cursors.jump.isDown && player.body.touching.down) {
             player.body.velocity.y = -300;
         }
+    }
+
+    function updateBullets(){
+        var position;
+        var speed = 10;
+
+        bullets.forEach(function(bullet) {
+            if (bullet.direction === 'up') {
+                bullet.sprite.y -= speed;
+            } else {
+                position = bullet.direction === 'right' ? speed : -speed;
+                bullet.sprite.position.x += position;
+            }
+        });
     }
 
     function createMummy() {
