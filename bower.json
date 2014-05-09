@@ -1,0 +1,6 @@
+{
+  "name": "html5-slug",
+  "dependencies": {
+    "momentjs": "*"
+  }
+}
