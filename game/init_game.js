@@ -85,8 +85,14 @@
 
         updateBullets();
 
-        if (cursors.fire.isDown) {
+        var now = new Date().getTime();
+        var lastBullet = bullets[bullets.length - 1];
+        var lastDate = lastBullet ? lastBullet.date + 100 : 0;
+        var canFire = lastDate < now;
+
+        if (cursors.fire.isDown && canFire) {
             var x, sprite, y, direction;
+            var date = new Date().getTime();
 
             if (cursors.up.isDown) {
                 x = (player.width / 2) + player.position.x;
@@ -108,7 +114,8 @@
 
             bullets.push({
                 direction: direction,
-                sprite: sprite
+                sprite: sprite,
+                date: date
             });
         }
 
