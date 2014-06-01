@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Html5 Slug</title>
+  <title>HTML Observer</title>
   <script src="//localhost:35729/livereload.js"></script>
+  <script src="dist/libraries.js"></script>
   <script src="dist/app.js"></script>
-  <style>
-    body{
-      overflow: auto !important;
-    }
-  </style>
+  <script src="demo/demo.js"></script>
 </head>
 <body>
-
+  <h1>App version: {{version}}</h1>
+  <section>
+    {{user.firstName}} - {{user.lastName}}
+  </section>
+  <hr>
+  <section>
+    {{team.league.id}} - {{team.league.division}}
+  </section>
 </body>
 </html>

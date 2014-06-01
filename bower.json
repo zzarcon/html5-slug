@@ -1,6 +1,6 @@
 {
-  "name": "html5-slug",
+  "name": "html-observer",
   "dependencies": {
-    "momentjs": "*"
+    "zepto": "*"
   }
 }
