@@ -24,6 +24,14 @@
         game.load.spritesheet('mummy', 'assets/mummy.png', 37, 45, 18);
     }
 
+    function createLedges() {
+        LEDGES.forEach(function(l){
+            var ledge = platforms.create(l.x, l.y, 'ground');
+            ledge.body.immovable = true;
+            ledge.width = l.width;
+        });
+    }
+
     function create() {
         // map = game.add.tilemap('map');
         game.world.setBounds(0, 0, mission.width, config.height);
@@ -39,10 +47,7 @@
         ground.scale.setTo(4, 2);
         ground.body.immovable = true;
 
-        var ledge = platforms.create(0, 480, 'ground');
-        ledge.body.immovable = true;
-        ledge = platforms.create(-150, 250, 'ground');
-        ledge.body.immovable = true;
+        createLedges();
 
         player = game.add.sprite(250, game.world.height - 170, 'marco');
 

@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     },
     concat: {
       application: {
-        src: ['game/lib/*.js', 'game/lib/momentjs/moment.js', 'game/init_app.js', 'game/models/*.js', 'game/init_game.js'],
+        src: ['game/lib/*.js', 'game/lib/momentjs/moment.js', 'game/init_app.js', 'game/ledges.js', 'game/models/*.js', 'game/init_game.js'],
         dest: 'dist/app.js'
       }
     },
